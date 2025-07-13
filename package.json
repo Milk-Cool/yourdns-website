@@ -1,0 +1,36 @@
+{
+  "name": "yourdns-website",
+  "version": "0.1.0",
+  "description": "Website for yourdns",
+  "keywords": [
+    "yourdns",
+    "dns"
+  ],
+  "homepage": "https://github.com/Milk-Cool/yourdns-website#readme",
+  "bugs": {
+    "url": "https://github.com/Milk-Cool/yourdns-website/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Milk-Cool/yourdns-website.git"
+  },
+  "license": "MIT",
+  "author": "Milk_Cool",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "^15.3.5",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.1.8",
+    "typescript": "5.8.3"
+  }
+}
