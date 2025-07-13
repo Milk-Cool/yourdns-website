@@ -5,6 +5,9 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
+            <head>
+                <link href="/style.css" rel="stylesheet" />
+            </head>
             <body>{children}</body>
         </html>
     );
