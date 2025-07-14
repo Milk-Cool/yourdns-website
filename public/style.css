@@ -51,3 +51,15 @@ input, select {
 button, input[type="submit"] {
     cursor: pointer;
 }
+
+.row {
+    display: block;
+    padding: .5em;
+    box-sizing: border-box;
+}
+.row:nth-child(2n) {
+    background: #f0a2b9;
+}
+.row:nth-child(2n + 1) {
+    background: #F095B0;
+}

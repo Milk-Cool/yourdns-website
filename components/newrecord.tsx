@@ -11,7 +11,7 @@ export default function NewRecord() {
 
     const [status, setStatus] = useState<"saved" | "saving" | "error">("saved");
 
-    return <form className="record" onSubmit={async e => {
+    return <div className="row"><form className="record" onSubmit={async e => {
         const form = new FormData(e.currentTarget);
         e.preventDefault();
         if(Number.isNaN(parseInt(form.get("ttl").toString()))) return setStatus("error");
@@ -35,5 +35,5 @@ export default function NewRecord() {
         </select>;&nbsp;
         <span>value = </span><input name="value" value={value} onChange={e => setValue(e.target.value as DNSRecordType)} />;&nbsp;
         <input type="submit" disabled={status === "saving"} value={status === "saving" ? "saving" : status === "error" ? "error!" : "save"} />
-    </form>;
+    </form></div>;
 };
