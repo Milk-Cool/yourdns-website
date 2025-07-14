@@ -8,7 +8,11 @@ export default function RootLayout({
             <head>
                 <link href="/style.css" rel="stylesheet" />
             </head>
-            <body>{children}</body>
+            <body>
+                <div id="content">
+                    {children}
+                </div>
+            </body>
         </html>
     );
 }

@@ -1,3 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Libertinus+Mono&display=swap");
+
 body {
-    background: #eee;
+    background: linear-gradient(#F095B0, #ED6B85);
+    margin: 0;
 }
+
+*:not(h1, h2) {
+    font-family: Inter, sans-serif;
+}
+h1, h2 {
+    font-family: "Libertinus Mono", monospace;
+}
+
+#content {
+    width: min(100vh, 100vw);
+    min-height: 100vh;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1em;
+    box-sizing: border-box;
+    background: #f3dce8;
+
+    color: #3d0c16;
+};
