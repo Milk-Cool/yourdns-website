@@ -16,10 +16,11 @@ export default function NewRecord({ base }: { base: string }) {
         e.preventDefault();
         if(Number.isNaN(parseInt(form.get("ttl").toString()))) return setStatus("error");
         setStatus("saving");
+        const name = form.get("name").toString();
         const type = form.get("type").toString() as DNSRecordType;
         const value = form.get("value").toString();
         try { await createRecord({
-            name: `${form.get("name").toString()}.${base}`,
+            name: name === "@" ? base : `${name}.${base}`,
             ttl: parseInt(form.get("ttl").toString()),
             type,
             value: type === "CNAME" && value === "@" ? base : value
