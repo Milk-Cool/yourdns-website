@@ -20,13 +20,14 @@ export default function Record({ record }: { record: DNSRecord }) {
         if(Number.isNaN(parseInt(form.get("ttl").toString()))) return setStatus("error");
         setStatus("saving");
         const name = form.get("name").toString();
-        console.log(name === "@" ? base : `${name}.${base}`);
+        const type = form.get("type").toString() as DNSRecordType;
+        const value = form.get("value").toString();
         try { await updateRecord({
             id,
             name: name === "@" ? base : `${name}.${base}`,
             ttl: parseInt(form.get("ttl").toString()),
-            type: form.get("type").toString() as DNSRecordType,
-            value: form.get("value").toString()
+            type,
+            value: type === "CNAME" && value === "@" ? base : value
         }); } catch(_) { setStatus("error"); return; }
         setStatus("saved");
     }}>
