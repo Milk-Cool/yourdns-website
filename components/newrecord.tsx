@@ -3,9 +3,9 @@ import { createRecord } from "@/actions/record";
 import { DNSRecord, DNSRecordType } from "@/api";
 import { useState } from "react";
 
-export default function NewRecord() {
+export default function NewRecord({ base }: { base: string }) {
     const [name, setName] = useState("");
-    const [ttl, setTTL] = useState("");
+    const [ttl, setTTL] = useState("300");
     const [type, setType] = useState("");
     const [value, setValue] = useState("");
 
@@ -17,7 +17,7 @@ export default function NewRecord() {
         if(Number.isNaN(parseInt(form.get("ttl").toString()))) return setStatus("error");
         setStatus("saving");
         try { await createRecord({
-            name: form.get("name").toString(),
+            name: `${form.get("name").toString()}.${base}`,
             ttl: parseInt(form.get("ttl").toString()),
             type: form.get("type").toString() as DNSRecordType,
             value: form.get("value").toString()

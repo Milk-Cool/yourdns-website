@@ -4,7 +4,9 @@ import { DNSRecord, DNSRecordType } from "@/api";
 import { useState } from "react";
 
 export default function Record({ record }: { record: DNSRecord }) {
-    const [name, setName] = useState(record.name);
+    const base = record.name.split(".").slice(-2).join(".");
+
+    const [name, setName] = useState(record.name.split(".").slice(0, -2).join(".") || "@");
     const [ttl, setTTL] = useState(record.ttl.toString());
     const [type, setType] = useState(record.type);
     const [value, setValue] = useState(record.value);
@@ -17,9 +19,11 @@ export default function Record({ record }: { record: DNSRecord }) {
         e.preventDefault();
         if(Number.isNaN(parseInt(form.get("ttl").toString()))) return setStatus("error");
         setStatus("saving");
+        const name = form.get("name").toString();
+        console.log(name === "@" ? base : `${name}.${base}`);
         try { await updateRecord({
             id,
-            name: form.get("name").toString(),
+            name: name === "@" ? base : `${name}.${base}`,
             ttl: parseInt(form.get("ttl").toString()),
             type: form.get("type").toString() as DNSRecordType,
             value: form.get("value").toString()
