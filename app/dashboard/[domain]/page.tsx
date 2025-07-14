@@ -22,6 +22,6 @@ export default async function Page({ params }: { params: Promise<{ domain: strin
         <h3>New record</h3>
         <NewRecord base={domain} />
         <h3>Manage records</h3>
-        {domains.map(x => <Record key={x.name} record={x} />)}
+        {domains.map(x => <Record key={x.id} record={x} />)}
     </>
 }
