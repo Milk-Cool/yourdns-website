@@ -9,6 +9,7 @@ export async function fetchAPI(endpoint: string, options: RequestInit = {}) {
 export type DNSRecordType = "A" | "AAAA" | "CNAME" | "TXT";
 
 export type DNSRecord = {
+    id: UUID;
     name: string;
     type: DNSRecordType;
     ttl: number;

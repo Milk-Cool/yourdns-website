@@ -26,14 +26,28 @@ h1, h2 {
     padding: 1em;
 }
 
-#header {
+#header, input, select {
     background: #75313f;
 }
-#header *, #header {
+#header *, #header, input, select {
     color: white;
+}
+input, select {
+    border: none;
+    margin: .25em;
+    padding: .25em;
+    border-radius: .5em;
 }
 
 .spacer {
     display: inline-block;
     width: 1em;
+}
+
+.input-ttl {
+    max-width: 4em;
+}
+
+button, input[type="submit"] {
+    cursor: pointer;
 }
