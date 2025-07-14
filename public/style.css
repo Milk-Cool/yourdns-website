@@ -19,7 +19,8 @@ h1, h2 {
 #content {
     min-height: calc(100vh - var(--header-height));
     background: #f3dce8;
-
+}
+#content, #content a {
     color: #3d0c16;
 }
 #content, #header {
