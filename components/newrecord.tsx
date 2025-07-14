@@ -21,7 +21,6 @@ export default function NewRecord({ base }: { base: string }) {
         try { await createRecord({
             name: `${form.get("name").toString()}.${base}`,
             ttl: parseInt(form.get("ttl").toString()),
-            type: form.get("type").toString() as DNSRecordType,
             type,
             value: type === "CNAME" && value === "@" ? base : value
         }); } catch(_) { setStatus("error"); return; }
