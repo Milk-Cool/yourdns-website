@@ -7,7 +7,7 @@ import { auth } from "@/auth";
 const checkError = new Error("Check error!");
 const internalError = new Error("Internal API returned error!");
 
-const check = async (record: DNSRecord | Omit<DNSRecord, "id">) => {
+const check = async (record: { name: DNSRecord["name"] }) => {
     const session = await auth();
     if(!session || !session.user || !session.user.email) return false;
     const baseRecord = (await (await fetchAPI(`/resolve/${record.name.split(".").slice(-2).join(".")}`)).json())[0] as DNSRecord;
@@ -30,6 +30,13 @@ export async function updateRecord(record: DNSRecord) {
             ttl: record.ttl,
             value: record.value
         })
+    });
+    if(f.status < 200 && f.status > 399) throw internalError;
+}
+export async function deleteRecord(record: { id: DNSRecord["id"], name: DNSRecord["name"] }) {
+    if(!await check(record)) throw checkError;
+    const f = await fetchAPI(`/records/${record.id}`, {
+        method: "DELETE"
     });
     if(f.status < 200 && f.status > 399) throw internalError;
 }

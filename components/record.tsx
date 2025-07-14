@@ -1,5 +1,5 @@
 "use client";
-import { updateRecord } from "@/actions/record";
+import { deleteRecord, updateRecord } from "@/actions/record";
 import { DNSRecord, DNSRecordType } from "@/api";
 import { useState } from "react";
 
@@ -41,5 +41,8 @@ export default function Record({ record }: { record: DNSRecord }) {
         </select>;&nbsp;
         <span>value = </span><input name="value" value={value} onChange={e => setValue(e.target.value as DNSRecordType)} />;&nbsp;
         <input type="submit" disabled={status === "saving"} value={status === "saving" ? "saving" : status === "error" ? "error!" : "save"} />
-    </form></div>;
+    </form><button onClick={async () => {
+        await deleteRecord({ id, name: record.name });
+        location.reload();
+    }}>delete</button></div>;
 };

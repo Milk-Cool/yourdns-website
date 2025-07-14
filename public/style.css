@@ -33,13 +33,13 @@ h1, h2 {
     height: var(--header-height);
 }
 
-#header, input, select {
+#header, input, select, button {
     background: #75313f;
 }
-#header *, #header, input, select {
+#header *, #header, input, select, button {
     color: white;
 }
-input, select {
+input, select, button {
     border: none;
     margin: .25em;
     padding: .25em;
@@ -63,6 +63,9 @@ button, input[type="submit"] {
     display: block;
     padding: .5em;
     box-sizing: border-box;
+}
+.row > form {
+    display: inline-block;
 }
 .row:nth-child(2n) {
     background: #f0a2b9;
