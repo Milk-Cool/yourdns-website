@@ -13,13 +13,27 @@ h1, h2 {
 }
 
 #content {
-    width: min(100vh, 100vw);
     min-height: 100vh;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 1em;
-    box-sizing: border-box;
     background: #f3dce8;
 
     color: #3d0c16;
-};
+}
+#content, #header {
+    width: min(100vh, 100vw);
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+    padding: 1em;
+}
+
+#header {
+    background: #75313f;
+}
+#header *, #header {
+    color: white;
+}
+
+.spacer {
+    display: inline-block;
+    width: 1em;
+}

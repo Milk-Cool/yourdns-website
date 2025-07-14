@@ -1,4 +1,3 @@
-import SignIn from "@/components/sign-in";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -9,6 +8,5 @@ export const metadata: Metadata = {
 export default function Page() {
     return <>
         <h1>Hiiii!</h1>
-        <SignIn />
     </>;
 }
