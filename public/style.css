@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Libertinus+Mono&display=swap");
 
+:root {
+    --header-height: 3.3em;
+}
+
 body {
     background: linear-gradient(#F095B0, #ED6B85);
     margin: 0;
@@ -13,7 +17,7 @@ h1, h2 {
 }
 
 #content {
-    min-height: 100vh;
+    min-height: calc(100vh - var(--header-height));
     background: #f3dce8;
 
     color: #3d0c16;
@@ -24,6 +28,9 @@ h1, h2 {
     margin-right: auto;
     box-sizing: border-box;
     padding: 1em;
+}
+#header {
+    height: var(--header-height);
 }
 
 #header, input, select {
