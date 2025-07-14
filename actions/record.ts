@@ -10,11 +10,15 @@ const internalError = new Error("Internal API returned error!");
 const check = async (record: DNSRecord | Omit<DNSRecord, "id">) => {
     const session = await auth();
     if(!session || !session.user || !session.user.email) return false;
-    const baseRecord = await (await fetchAPI("id" in record ? `/records/${record.id}` : `/resolve/${record.name.split(".").slice(-2).join(".")}`)).json() as DNSRecord[];
-    if(baseRecord.length === 0) return;
-    if(!(record.name === baseRecord[0].name || record.name.endsWith("." + baseRecord[0].name))
-        || record.name === "-." + baseRecord[0].name) return false;
-    const ownerRecord = await (await fetchAPI(`/resolve/-.${baseRecord[0].name}`)).json() as DNSRecord[];
+    let baseRecord: DNSRecord;
+    if("id" in record)
+        baseRecord = await (await fetchAPI(`/records/${record.id}`)).json();
+    else
+        baseRecord = (await (await fetchAPI(`/resolve/${record.name.split(".").slice(-2).join(".")}`)).json())[0];
+    if(!baseRecord) return false;
+    if(!(record.name === baseRecord.name || record.name.endsWith("." + baseRecord.name))
+        || record.name === "-." + baseRecord.name) return false;
+    const ownerRecord = await (await fetchAPI(`/resolve/-.${baseRecord.name}`)).json() as DNSRecord[];
     if(session.user.email !== ownerRecord[0].value) return false;
     return true;
 }
