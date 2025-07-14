@@ -2,8 +2,25 @@
 
 import { DNSRecord } from "@/api";
 import { fetchAPI } from "@/api";
+import { auth } from "@/auth";
+
+const checkError = new Error("Check error!");
+const internalError = new Error("Internal API returned error!");
+
+const check = async (record: DNSRecord | Omit<DNSRecord, "id">) => {
+    const session = await auth();
+    if(!session || !session.user || !session.user.email) return false;
+    const baseRecord = await (await fetchAPI("id" in record ? `/records/${record.id}` : `/resolve/${record.name.split(".").slice(-2).join(".")}`)).json() as DNSRecord[];
+    if(baseRecord.length === 0) return;
+    if(!(record.name === baseRecord[0].name || record.name.endsWith("." + baseRecord[0].name))
+        || record.name === "-." + baseRecord[0].name) return false;
+    const ownerRecord = await (await fetchAPI(`/resolve/-.${baseRecord[0].name}`)).json() as DNSRecord[];
+    if(session.user.email !== ownerRecord[0].value) return false;
+    return true;
+}
 
 export async function updateRecord(record: DNSRecord) {
+    if(!await check(record)) throw checkError;
     const f = await fetchAPI(`/records/${record.id}`, {
         method: "PUT",
         headers: { "content-type": "application/json" },
@@ -14,5 +31,19 @@ export async function updateRecord(record: DNSRecord) {
             value: record.value
         })
     });
-    if(f.status < 200 && f.status > 399) throw new Error("Internal API returned error!");
+    if(f.status < 200 && f.status > 399) throw internalError;
+}
+export async function createRecord(record: Omit<DNSRecord, "id">) {
+    if(!await check(record)) throw checkError;
+    const f = await fetchAPI(`/records`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+            name: record.name,
+            type: record.type,
+            ttl: record.ttl,
+            value: record.value
+        })
+    });
+    if(f.status < 200 && f.status > 399) throw internalError;
 }

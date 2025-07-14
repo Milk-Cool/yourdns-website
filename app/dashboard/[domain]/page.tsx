@@ -1,5 +1,6 @@
 import { DNSRecord, fetchAPI } from "@/api";
 import { auth } from "@/auth";
+import NewRecord from "@/components/newrecord";
 import Record from "@/components/record";
 import { redirect } from "next/navigation";
 
@@ -18,6 +19,9 @@ export default async function Page({ params }: { params: Promise<{ domain: strin
 
     return <>
         <h1>Domain management: {domain}</h1>
+        <h3>New record</h3>
+        <NewRecord />
+        <h3>Manage records</h3>
         {domains.map(x => <Record key={x.name} record={x} />)}
     </>
 }

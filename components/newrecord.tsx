@@ -1,14 +1,13 @@
 "use client";
-import { updateRecord } from "@/actions/record";
+import { createRecord } from "@/actions/record";
 import { DNSRecord, DNSRecordType } from "@/api";
 import { useState } from "react";
 
-export default function Record({ record }: { record: DNSRecord }) {
-    const [name, setName] = useState(record.name);
-    const [ttl, setTTL] = useState(record.ttl.toString());
-    const [type, setType] = useState(record.type);
-    const [value, setValue] = useState(record.value);
-    const { id } = record;
+export default function NewRecord() {
+    const [name, setName] = useState("");
+    const [ttl, setTTL] = useState("");
+    const [type, setType] = useState("");
+    const [value, setValue] = useState("");
 
     const [status, setStatus] = useState<"saved" | "saving" | "error">("saved");
 
@@ -17,14 +16,14 @@ export default function Record({ record }: { record: DNSRecord }) {
         e.preventDefault();
         if(Number.isNaN(parseInt(form.get("ttl").toString()))) return setStatus("error");
         setStatus("saving");
-        try { await updateRecord({
-            id,
+        try { await createRecord({
             name: form.get("name").toString(),
             ttl: parseInt(form.get("ttl").toString()),
             type: form.get("type").toString() as DNSRecordType,
             value: form.get("value").toString()
         }); } catch(_) { setStatus("error"); return; }
         setStatus("saved");
+        location.reload();
     }}>
         <span>name = </span><input name="name" value={name} onChange={e => setName(e.target.value)} />;&nbsp;
         <span>ttl = </span><input name="ttl" type="number" className="input-ttl" value={ttl} onChange={e => setTTL(e.target.value)} />;&nbsp;
