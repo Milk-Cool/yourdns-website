@@ -10,11 +10,7 @@ const internalError = new Error("Internal API returned error!");
 const check = async (record: DNSRecord | Omit<DNSRecord, "id">) => {
     const session = await auth();
     if(!session || !session.user || !session.user.email) return false;
-    let baseRecord: DNSRecord;
-    if("id" in record)
-        baseRecord = await (await fetchAPI(`/records/${record.id}`)).json();
-    else
-        baseRecord = (await (await fetchAPI(`/resolve/${record.name.split(".").slice(-2).join(".")}`)).json())[0];
+    const baseRecord = (await (await fetchAPI(`/resolve/${record.name.split(".").slice(-2).join(".")}`)).json())[0] as DNSRecord;
     if(!baseRecord) return false;
     if(!(record.name === baseRecord.name || record.name.endsWith("." + baseRecord.name))
         || record.name === "-." + baseRecord.name) return false;
