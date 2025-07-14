@@ -1,6 +1,6 @@
 "use client";
 import { createRecord } from "@/actions/record";
-import { DNSRecord, DNSRecordType } from "@/api";
+import { DNSRecordType } from "@/api";
 import { useState } from "react";
 
 export default function NewRecord({ base }: { base: string }) {

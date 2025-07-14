@@ -3,11 +3,13 @@
 import { DNSRecord } from "@/api";
 import { fetchAPI } from "@/api";
 import { auth } from "@/auth";
+import { VALID_DOMAIN_REGEX } from "@/regex";
 
 const checkError = new Error("Check error!");
 const internalError = new Error("Internal API returned error!");
 
 const check = async (record: { name: DNSRecord["name"] }) => {
+    if(!record.name.match(VALID_DOMAIN_REGEX)) return false;
     const session = await auth();
     if(!session || !session.user || !session.user.email) return false;
     const base = record.name.split(".").slice(-2).join(".");
