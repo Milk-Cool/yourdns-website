@@ -28,7 +28,10 @@ export default function Record({ record }: { record: DNSRecord }) {
             ttl: parseInt(form.get("ttl").toString()),
             type,
             value: type === "CNAME" && value === "@" ? base : value
-        }); } catch(_) { setStatus("error"); return; }
+        }); } catch(e) {
+            alert(e.message);
+            setStatus("error"); return;
+        }
         setStatus("saved");
     }}>
         <span>name = </span><input name="name" value={name} onChange={e => setName(e.target.value)} />;&nbsp;

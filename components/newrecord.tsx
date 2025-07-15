@@ -24,7 +24,10 @@ export default function NewRecord({ base }: { base: string }) {
             ttl: parseInt(form.get("ttl").toString()),
             type,
             value: type === "CNAME" && value === "@" ? base : value
-        }); } catch(_) { setStatus("error"); return; }
+        }); } catch(e) {
+            alert(e.message);
+            setStatus("error"); return;
+        }
         setStatus("saved");
         location.reload();
     }}>

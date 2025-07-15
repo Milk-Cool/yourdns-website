@@ -37,3 +37,6 @@ next-env.d.ts
 
 # Package lock
 package-lock.json
+
+# TLD list
+tlds.txt

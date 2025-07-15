@@ -7,6 +7,10 @@ import SignOut from "./sign-out";
 export default function Header({ auth }: { auth: Session }) {
     return <div id="header">
         <Link href="/"><b>yourdns!</b></Link><Spacer />|<Spacer />
-        {auth?.user?.email ? <><Link href="/dashboard">Dashboard</Link><Spacer /><SignOut /></> : <SignIn />}
+        {auth?.user?.email ? <>
+            <Link href="/dashboard">Dashboard</Link><Spacer />
+            <Link href="/register">New domain</Link><Spacer />
+            <SignOut />
+        </> : <SignIn />}
     </div>;
 };
