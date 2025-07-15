@@ -15,7 +15,7 @@ export type DNSRecord = {
     ttl: number;
     value: string;
 };
-export type TimestampedRecord = DNSRecord | {
+export type TimestampedRecord = DNSRecord & {
     timestamp: string; // Number as string, too big for Postgres
 };
 
