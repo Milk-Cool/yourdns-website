@@ -24,3 +24,12 @@ export type DNSProxyRule = {
     rule: string;
     addr: string;
 };
+
+export type CertPair = {
+    id: UUID;
+    domain: string;
+    key: string;
+    cert: string;
+    timestamp: string;
+    until: string;
+};

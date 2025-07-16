@@ -1,5 +1,7 @@
-import { DNSRecord, fetchAPI } from "@/api";
+import { CertPair, DNSRecord, fetchAPI } from "@/api";
 import { auth } from "@/auth";
+import Cert from "@/components/cert";
+import NewCert from "@/components/newcert";
 import NewRecord from "@/components/newrecord";
 import Record from "@/components/record";
 import { redirect } from "next/navigation";
@@ -17,11 +19,21 @@ export default async function Page({ params }: { params: Promise<{ domain: strin
     const f = await fetchAPI(`/records?base=${encodeURIComponent(domain)}`);
     const domains = (await f.json() as DNSRecord[]).filter(x => !x.name.match(/^-\./));
 
+    const f2 = await fetchAPI(`/certbase/${domain}`);
+    const certs = (await f2.json() as CertPair[]);
+
     return <>
         <h1>Domain management: {domain}</h1>
         <h3>New record</h3>
         <NewRecord base={domain} />
         <h3>Manage records</h3>
         {domains.map(x => <Record key={x.id} record={x} />)}
+        <h3>Issue certificate</h3>
+        <NewCert />
+        <h3>Manage certificates</h3>
+        {certs.map(x => <Cert key={x.id} certPair={x} />)}
+        <h5>To convert to PEM, run:</h5>
+        <code>openssl x509 -inform der -in {domain}.cert.der -out {domain}.pem</code><br />
+        <code>openssl rsa -inform der -in {domain}.key.der -out {domain}.key</code>
     </>
 }
