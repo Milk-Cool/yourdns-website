@@ -24,7 +24,7 @@ export default async function Page({ params }: { params: Promise<{ domain: strin
     const certs = (await f2.json() as CertPair[]);
 
     return <>
-        <h1>Domain management: {domain} <DeleteDomain domain={domain} /></h1>
+        <h1>Domain management: {domain}</h1>
         <h3>New record</h3>
         <NewRecord base={domain} />
         <h3>Manage records</h3>
@@ -36,5 +36,7 @@ export default async function Page({ params }: { params: Promise<{ domain: strin
         <h5>To convert to PEM, run:</h5>
         <code>openssl x509 -inform der -in {domain}.cert.der -out {domain}.pem</code><br />
         <code>openssl rsa -inform der -in {domain}.key.der -out {domain}.key</code>
+        <h3>Danger zone</h3>
+        <DeleteDomain domain={domain} />
     </>
 }

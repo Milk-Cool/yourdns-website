@@ -7,7 +7,7 @@ export default function DeleteDomain({ domain }: { domain: string }) {
     const [status, setStatus] = useState<"idle" | "deleting" | "error">("idle");
     const router = useRouter();
 
-    return <button onClick={async e => {
+    return <div className="row"><button onClick={async e => {
         e.preventDefault();
         if(!confirm("are you sure?")) return;
         setStatus("deleting");
@@ -18,5 +18,5 @@ export default function DeleteDomain({ domain }: { domain: string }) {
         }
         setStatus("idle");
         router.push("/dashboard");
-    }}>{status === "idle" ? "delete" : status === "deleting" ? "deleting" : "error"}</button>;
+    }}>{status === "idle" ? "delete domain" : status === "deleting" ? "deleting" : "error"}</button></div>;
 };
