@@ -1,13 +1,11 @@
 "use client";
 
 import { generateCert } from "@/actions/cert";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function NewCert() {
     const [status, setStatus] = useState<"none" | "generating" | "error">("none");
     const [name, setName] = useState("");
-    const router = useRouter();
 
     return (
         <div className="row"><form onSubmit={async e => {

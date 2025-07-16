@@ -27,10 +27,12 @@ export async function generateCert(record: { name: DNSRecord["name"] }) {
     if(!(await check(record))) throw checkError;
 
     const f1 = await fetchAPI(`/cert/${record.name}`);
-    if(f1.status < 200 || f1.status > 399) throw internalError;
-    const cert = await f1.json() as CertPair;
-    const diff = Date.now() - parseInt(cert.timestamp);
-    if(diff < 24 * 3600 * 1000) throw intervalError;
+    if(f1.status !== 404) {
+        if(f1.status < 200 || f1.status > 399) throw internalError;
+        const cert = await f1.json() as CertPair;
+        const diff = Date.now() - parseInt(cert.timestamp);
+        if(diff < 24 * 3600 * 1000) throw intervalError;
+    }
 
     const f2 = await fetchAPI(`/cert/${record.name}`, {
         method: "POST"
