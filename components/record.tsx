@@ -45,7 +45,8 @@ export default function Record({ record }: { record: DNSRecord }) {
         <span>value = </span><input name="value" value={value} onChange={e => setValue(e.target.value as DNSRecordType)} />;&nbsp;
         <input type="submit" disabled={status === "saving"} value={status === "saving" ? "saving" : status === "error" ? "error!" : "save"} />
     </form><button onClick={async () => {
-        await deleteRecord({ id, name: record.name });
+        try { await deleteRecord({ id, name: record.name }); }
+        catch(e) { alert(e.message); return; }
         location.reload();
     }}>delete</button></div>;
 };
