@@ -7,7 +7,7 @@ export default function DeleteDomain({ domain }: { domain: string }) {
     const [status, setStatus] = useState<"idle" | "deleting" | "error">("idle");
     const router = useRouter();
 
-    return <div className="row"><button onClick={async e => {
+    return <div className="row">delete domain: <button onClick={async e => {
         e.preventDefault();
         if(!confirm("are you sure?")) return;
         setStatus("deleting");

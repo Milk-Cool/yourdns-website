@@ -13,5 +13,6 @@ export default async function Page() {
     return <>
         <h1>Your dashboard</h1>
         {domains.map(x => <Link className="row" key={x} href={`/dashboard/${x}`}>{x}</Link>)}
+        <h5>Your email is: {session.user.email}</h5>
     </>
 }

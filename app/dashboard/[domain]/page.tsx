@@ -5,6 +5,7 @@ import DeleteDomain from "@/components/deletedomain";
 import NewCert from "@/components/newcert";
 import NewRecord from "@/components/newrecord";
 import Record from "@/components/record";
+import TransferDomain from "@/components/transferdomain";
 import { redirect } from "next/navigation";
 
 export default async function Page({ params }: { params: Promise<{ domain: string }> }) {
@@ -38,5 +39,6 @@ export default async function Page({ params }: { params: Promise<{ domain: strin
         <code>openssl rsa -inform der -in {domain}.key.der -out {domain}.key</code>
         <h3>Danger zone</h3>
         <DeleteDomain domain={domain} />
+        <TransferDomain domain={domain} />
     </>
 }

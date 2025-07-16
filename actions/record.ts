@@ -16,7 +16,7 @@ const check = async (record: { name: DNSRecord["name"] }) => {
     if(!(record.name === base || record.name.endsWith("." + base))
         || record.name === "-." + base) return false;
     const ownerRecord = await (await fetchAPI(`/resolve/-.${base}`)).json() as DNSRecord[];
-    if(session.user.email !== ownerRecord[0].value) return false;
+    if(ownerRecord.length === 0 || session.user.email !== ownerRecord[0].value) return false;
     return true;
 }
 
