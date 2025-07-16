@@ -10,7 +10,7 @@ export default function NewCert() {
     const router = useRouter();
 
     return (
-        <form onSubmit={async e => {
+        <div className="row"><form onSubmit={async e => {
             const form = new FormData(e.currentTarget);
             e.preventDefault();
             setStatus("generating");
@@ -26,6 +26,6 @@ export default function NewCert() {
         }}>
             <span>name = </span><input name="name" value={name} onChange={e => setName(e.target.value)} />;&nbsp;
             <input type="submit" disabled={status === "generating"} value={status === "generating" ? "generating" : status === "error" ? "error!" : "save"} />
-        </form>
+        </form></div>
     );
 }
