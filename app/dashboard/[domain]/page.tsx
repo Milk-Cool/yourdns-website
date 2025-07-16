@@ -1,6 +1,7 @@
 import { CertPair, DNSRecord, fetchAPI } from "@/api";
 import { auth } from "@/auth";
 import Cert from "@/components/cert";
+import DeleteDomain from "@/components/deletedomain";
 import NewCert from "@/components/newcert";
 import NewRecord from "@/components/newrecord";
 import Record from "@/components/record";
@@ -23,7 +24,7 @@ export default async function Page({ params }: { params: Promise<{ domain: strin
     const certs = (await f2.json() as CertPair[]);
 
     return <>
-        <h1>Domain management: {domain}</h1>
+        <h1>Domain management: {domain} <DeleteDomain domain={domain} /></h1>
         <h3>New record</h3>
         <NewRecord base={domain} />
         <h3>Manage records</h3>
