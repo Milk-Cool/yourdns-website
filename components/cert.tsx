@@ -13,10 +13,11 @@ export default function Cert({ certPair }: { certPair: CertPair }) {
         <button onClick={async e => {
             e.preventDefault();
             setStatus("generating");
-            try { await generateCert({
+            const res = await generateCert({
                 name: certPair.domain
-            }); } catch(e) {
-                alert(e.message);
+            });
+            if(typeof res === "object" && "error" in res) {
+                alert(res.error);
                 setStatus("error"); return;
             }
             setStatus("generated");

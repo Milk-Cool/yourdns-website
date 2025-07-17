@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 
 export default async function Page() {
     const ca = await getCA();
+    if(typeof ca === "object" && "error" in ca) return alert(ca.error);
     const allowedTLDs = readFileSync("tlds.txt", "utf-8").split("\n").filter(x => x);
     return <>
         <h1>yourdns</h1>

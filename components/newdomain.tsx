@@ -15,10 +15,11 @@ export default function NewDomain() {
             e.preventDefault();
             setStatus("saving");
             const name = form.get("name").toString();
-            try { await createDomain({
+            const res = await createDomain({
                 name
-            }); } catch(e) {
-                alert(e.message);
+            });
+            if(typeof res === "object" && "error" in res) {
+                alert(res.error);
                 setStatus("error"); return;
             }
             setStatus("none");

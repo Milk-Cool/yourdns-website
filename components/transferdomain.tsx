@@ -19,8 +19,9 @@ export default function TransferDomain({ domain }: { domain: string }) {
             e.preventDefault();
             if(!confirm("are you sure?\ntransfer to: " + owner)) return;
             setStatus("transferring");
-            try { await transferDomain(domain, owner); } catch(e) {
-                alert(e.message);
+            const res = await transferDomain(domain, owner);
+            if(typeof res === "object" && "error" in res) {
+                alert(res.error);
                 setStatus("error"); return;
             }
             setStatus("none");

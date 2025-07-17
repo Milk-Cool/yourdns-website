@@ -19,13 +19,14 @@ export default function NewRecord({ base }: { base: string }) {
         const name = form.get("name").toString();
         const type = form.get("type").toString() as DNSRecordType;
         const value = form.get("value").toString();
-        try { await createRecord({
+        const res = await createRecord({
             name: name === "@" ? base : `${name}.${base}`,
             ttl: parseInt(form.get("ttl").toString()),
             type,
             value: type === "CNAME" && value === "@" ? base : value
-        }); } catch(e) {
-            alert(e.message);
+        });
+        if(typeof res === "object" && "error" in res) {
+            alert(res.error);
             setStatus("error"); return;
         }
         setStatus("saved");

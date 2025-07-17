@@ -11,9 +11,9 @@ export default function DeleteDomain({ domain }: { domain: string }) {
         e.preventDefault();
         if(!confirm("are you sure?")) return;
         setStatus("deleting");
-        try { await deleteDomain(domain); }
-        catch(e) {
-            alert(e.message);
+        const res = await deleteDomain(domain);
+        if(typeof res === "object" && "error" in res) {
+            alert(res.error);
             setStatus("error"); return;
         }
         setStatus("idle");

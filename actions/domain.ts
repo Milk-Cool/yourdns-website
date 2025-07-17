@@ -5,8 +5,8 @@ import { fetchAPI } from "@/api";
 import { auth } from "@/auth";
 import { VALID_DOMAIN_REGEX } from "@/regex";
 
-const checkError = new Error("Check error!");
-const internalError = new Error("Internal API returned error!");
+const checkError = new Error("Check error!").message;
+const internalError = new Error("Internal API returned error!").message;
 
 const check = async (name: DNSRecord["name"]) => {
     if(!name.match(VALID_DOMAIN_REGEX)) return false;
@@ -19,16 +19,16 @@ const check = async (name: DNSRecord["name"]) => {
 }
 
 export async function deleteDomain(name: DNSRecord["name"]) {
-    if(await check(name) === false) throw checkError;
+    if(await check(name) === false) return { error: checkError };
     const f = await fetchAPI(`/delete/${name}`, {
         method: "POST"
     });
-    if(f.status < 200 && f.status > 399) throw internalError;
+    if(f.status < 200 && f.status > 399) return { error: internalError };
 }
 
 export async function transferDomain(name: DNSRecord["name"], owner: string) {
     const ownerRecord = await check(name);
-    if(ownerRecord === false) throw checkError;
+    if(ownerRecord === false) return { error: checkError };
     console.log(ownerRecord);
     const f = await fetchAPI(`/records/${ownerRecord[0].id}`, {
         method: "PUT",
@@ -42,5 +42,5 @@ export async function transferDomain(name: DNSRecord["name"], owner: string) {
             value: owner
         } as Omit<DNSRecord, "id">)
     });
-    if(f.status < 200 && f.status > 399) throw internalError;
+    if(f.status < 200 && f.status > 399) return { error: internalError };
 }

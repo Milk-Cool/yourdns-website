@@ -13,10 +13,11 @@ export default function NewCert() {
             e.preventDefault();
             setStatus("generating");
             const name = form.get("name").toString();
-            try { await generateCert({
+            const res = await generateCert({
                 name
-            }); } catch(e) {
-                alert(e.message);
+            });
+            if(typeof res === "object" && "error" in res) {
+                alert(res.error);
                 setStatus("error"); return;
             }
             setStatus("none");

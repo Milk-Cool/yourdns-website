@@ -5,8 +5,8 @@ import { fetchAPI } from "@/api";
 import { auth } from "@/auth";
 import { VALID_DOMAIN_REGEX } from "@/regex";
 
-const checkError = new Error("Check error!");
-const internalError = new Error("Internal API returned error!");
+const checkError = new Error("Check error!").message;
+const internalError = new Error("Internal API returned error!").message;
 
 const check = async (record: { name: DNSRecord["name"] }) => {
     if(!record.name.match(VALID_DOMAIN_REGEX)) return false;
@@ -21,7 +21,7 @@ const check = async (record: { name: DNSRecord["name"] }) => {
 }
 
 export async function updateRecord(record: DNSRecord) {
-    if(!await check(record)) throw checkError;
+    if(!await check(record)) return { error: checkError };
     const f = await fetchAPI(`/records/${record.id}`, {
         method: "PUT",
         headers: { "content-type": "application/json" },
@@ -32,17 +32,17 @@ export async function updateRecord(record: DNSRecord) {
             value: record.value
         })
     });
-    if(f.status < 200 && f.status > 399) throw internalError;
+    if(f.status < 200 && f.status > 399) return { error: internalError };
 }
 export async function deleteRecord(record: { id: DNSRecord["id"], name: DNSRecord["name"] }) {
-    if(!await check(record)) throw checkError;
+    if(!await check(record)) return { error: checkError };
     const f = await fetchAPI(`/records/${record.id}`, {
         method: "DELETE"
     });
-    if(f.status < 200 && f.status > 399) throw internalError;
+    if(f.status < 200 && f.status > 399) return { error: internalError };
 }
 export async function createRecord(record: Omit<DNSRecord, "id">) {
-    if(!await check(record)) throw checkError;
+    if(!await check(record)) return { error: checkError };
     const f = await fetchAPI(`/records`, {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -53,5 +53,5 @@ export async function createRecord(record: Omit<DNSRecord, "id">) {
             value: record.value
         })
     });
-    if(f.status < 200 && f.status > 399) throw internalError;
+    if(f.status < 200 && f.status > 399) return { error: internalError };
 }
