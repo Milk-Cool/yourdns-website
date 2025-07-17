@@ -19,7 +19,7 @@ export default async function Page() {
         <h2>installation</h2>
         set one of the following as your DNS (pick whatever works on your system!) according to <a href="https://nordvpn.com/blog/how-to-change-dns/" target="_blank">these instructions</a>:
         <h3>DNS: {process.env.DNS_IP} | DoH: https://{process.env.DNS_DOH_HOST}</h3>
-        then, if you want TLS support, install this certificate authority and install it (google the process for your device):<br />
+        then, if you want TLS support, download this certificate authority and install it (google the process for your device):<br />
         <HexDownload hex={ca} filename="yourdns-ca.der">download certificate authority</HexDownload>
         <h2>want your own domain?</h2>
         sign in with google and create your own domain in the dashboard! currently allowed TLDs are:
