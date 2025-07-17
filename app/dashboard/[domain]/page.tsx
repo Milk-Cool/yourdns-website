@@ -7,6 +7,12 @@ import NewRecord from "@/components/newrecord";
 import Record from "@/components/record";
 import TransferDomain from "@/components/transferdomain";
 import { redirect } from "next/navigation";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "yourdns | domain dasboard",
+    description: "the domain management page"
+};
 
 export default async function Page({ params }: { params: Promise<{ domain: string }> }) {
     const session = await auth();

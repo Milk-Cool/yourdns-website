@@ -2,6 +2,12 @@ import { DNSRecord, fetchAPI } from "@/api";
 import { auth } from "@/auth";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "yourdns | dashboard",
+    description: "the dashboard for yourdns"
+};
 
 export default async function Page() {
     const session = await auth();
